@@ -1,0 +1,34 @@
+<div>
+  <span>{{ months[currentMonth] }} {{ currentYear }}</span>
+  <table>
+    <thead>
+      <tr>
+        <th>Sun</th>
+        <th>Mon</th>
+        <th>Tue</th>
+        <th>Wed</th>
+        <th>Thu</th>
+        <th>Fri</th>
+        <th>Sat</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Itera sobre las semanas en el calendario -->
+      <tr *ngFor="let week of getCalendar(); let i = index">
+        <!-- Itera sobre los días de la semana -->
+        <ng-container *ngFor="let day of week; let j = index">
+          <!-- Verifica si el día está en el mes actual -->
+          <ng-container *ngIf="getCalendarDays(currentYear, currentMonth)[i * 7 + j].inMonth">
+            <td (click)="selectDate(day)" [class.selected]="selectedDate?.toDateString() === day.toDateString()">
+              {{ getCalendarDays(currentYear, currentMonth)[i * 7 + j].day }}
+            </td>
+          </ng-container>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+  <h2>
+    <button (click)="changeMonth(-1)">Anterior</button>
+    <button (click)="changeMonth(1)">Siguiente</button>
+  </h2>
+</div>
